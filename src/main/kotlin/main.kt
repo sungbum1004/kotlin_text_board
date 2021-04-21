@@ -5,27 +5,41 @@ fun main() {
     println("== 게시판 관리 프로그램 시작 ==")
 
     var articlesLastId = 0
+    val articles = mutableListOf<Article>()
 
-    while ( true ) {
+    loop@ while ( true ) {
         print("명령어) ")
         val command = readLineTrime()
 
-        if ( command == "system exit" ) {
-            println("프로그램을 종료합니다.")
-            break
-        }
+        when (command) {
+            "system exit" -> {
+                println("프로그램을 종료합니다.")
+                break@loop
+            }
+            "article write" -> {
+                val id = articlesLastId + 1
+                print("제목 : ")
+                val title = readLineTrime()
+                print("내용 : ")
+                val body = readLineTrime()
+                val article = Article(id, title, body)
 
-        else if ( command == "article write" ) {
-            val id = articlesLastId + 1
-            print("제목 : ")
-            val title = readLineTrime()
-            print("내용 : ")
-            val body = readLineTrime()
-            val article = Article(id, title, body)
+                println("${id}번 게시물이 작성되었습니다.")
 
-            println("${id}번 게시물이 작성되었습니다.")
-            articlesLastId = id
+                articles.add(article)
 
+                articlesLastId = id
+
+            }
+            "article list" -> {
+                println("번호 / 제목")
+                for ( article in articles ) {
+                    println("${article.id} / ${article.title}")
+                }
+            }
+            else -> {
+                println("`$command` 은(는) 존재하지 않는 명령어 입니다.")
+            }
         }
     }
 
