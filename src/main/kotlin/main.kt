@@ -2,12 +2,22 @@ import java.text.SimpleDateFormat
 
 fun readLineTrime() = readLine()!!.trim()
 
+val articles = mutableListOf<Article>()
+
+fun getArticleById(id: Int): Article? {
+    for (article in articles) {
+        if (article.id == id) {
+            return article
+        }
+    }
+
+    return null
+}
 
 fun main() {
     println("== 게시판 관리 프로그램 시작 ==")
 
     var articlesLastId = 0
-    val articles = mutableListOf<Article>()
 
     loop@ while ( true ) {
         print("명령어) ")
@@ -21,13 +31,8 @@ fun main() {
            command.startsWith("article delete ") -> {
                val id = command.trim().split(" ")[2].toInt()
 
-               var articleToDelete: Article? = null
+               var articleToDelete = getArticleById(id)
 
-               for (article in articles) {
-                   if (article.id == id) {
-                       articleToDelete = article
-                   }
-               }
                if (articleToDelete == null) {
                    println("${id}번 게시물은 존재하지 않습니다.")
                    continue
