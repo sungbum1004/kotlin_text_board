@@ -31,7 +31,7 @@ fun main() {
            command.startsWith("article delete ") -> {
                val id = command.trim().split(" ")[2].toInt()
 
-               var articleToDelete = getArticleById(id)
+               val articleToDelete = getArticleById(id)
 
                if (articleToDelete == null) {
                    println("${id}번 게시물은 존재하지 않습니다.")
@@ -43,7 +43,7 @@ fun main() {
             command.startsWith("article modify ") -> {
                 val id = command.trim().split(" ")[2].toInt()
 
-                var articleToModify = getArticleById(id)
+                val articleToModify = getArticleById(id)
 
                 if (articleToModify == null) {
                     println("${id}번 게시물은 존재하지 않습니다.")
@@ -52,11 +52,27 @@ fun main() {
 
                 print("${id}번 게시물 새 제목 : ")
                 articleToModify.title = readLineTrime()
-                articleToModify.title = "새 제목"
-                articleToModify.body = "새 제목"
+                print("${id}번 게시물 새 내용 : ")
+                articleToModify.body = readLineTrime()
                 articleToModify.updateDate = Util.getNowDateStr()
 
                 println("${id}번 게시물을 수정하였습니다.")
+            }
+            command.startsWith("article detail ") -> {
+                val id = command.trim().split(" ")[2].toInt()
+
+                val articleToDetail = getArticleById(id)
+
+                if (articleToDetail == null) {
+                    println("${id}번 게시물은 존재하지 않습니다.")
+                    continue
+                }
+
+                println("번호 : ${articleToDetail.id}")
+                println("작성날짜 : ${articleToDetail.regDate}")
+                println("갱신날짜 : ${articleToDetail.updateDate}")
+                println("제목 : ${articleToDetail.title}")
+                println("내용 : ${articleToDetail.body}")
             }
            command == "article write" -> {
                 val id = articlesLastId + 1
