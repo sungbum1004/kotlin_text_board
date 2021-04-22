@@ -74,7 +74,7 @@ fun main() {
             }
             command == "article list" -> {
                 println("번호 / 작성날짜 / 제목")
-                for ( article in articles ) {
+                for ( article in articles.reversed() ) {
                     println("${article.id} / ${article.regDate} / ${article.title}")
                 }
             }
@@ -117,7 +117,7 @@ fun addArticle(title: String, body: String): Int {
 }
 
 fun makeTestArticles() {
-    for ( id in 1 .. 100 ) {
+    for (id in 1..100) {
         val title = "제목_$id"
         val body = "내용_$id"
 
